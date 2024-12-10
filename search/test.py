@@ -1,7 +1,9 @@
 from search import Search
 from pathlib import Path
 
-
+'''
+Testing
+'''
 print('______Demo Video Bot_______')
 
 try:
@@ -10,6 +12,8 @@ try:
 
     s = Search(keyword, video_count)
     s.search_instagram()
+except KeyboardInterrupt:
+    pass
 except Exception as e:
     print(f'[-] Exiting : {e}')
 

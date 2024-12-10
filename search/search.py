@@ -1,8 +1,8 @@
-from googleSearch import Google
-from instagram import Instagram
+from .googleSearch import Google
+from .instagram import Instagram
 from time import sleep
 from pathlib import Path
-from utils import save_media
+from .utils import save_media
 
 class Search():
     def __init__(self, keyword, limit = 10):
@@ -57,7 +57,7 @@ class Search():
             #         )
             instagram.save_history()
 
-        except KeyboardInterrupt as e:
+        except Exception as e:
             print(f'Something went wrong while searching videos : {e}')
 
     def search_reddit(self):

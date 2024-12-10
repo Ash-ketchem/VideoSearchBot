@@ -1,9 +1,10 @@
-import random
+# import random
 import uuid
 from os.path import join
 from pathlib import Path
 import requests
 from time import sleep
+from tqdm import tqdm
 
 instagram_headers = {
     "Host": "www.instagram.com",
@@ -42,15 +43,27 @@ def save_media(url, folder, filename = uuid.uuid4()):
 
         # sleep(random.uniform(1, 5))
 
-        res = requests.get(url, headers=general_headers)
-        res.raise_for_status()
+        with requests.get(url, headers=general_headers) as resp:
+            resp.raise_for_status()
+            total_size = int(resp.headers.get('content-length', 0))
+            file_path = join(folder, filename + '.mp4')
 
-        with open(join(folder, filename + '.mp4'), 'wb') as file:
-                file.write(res.content)
-                print(f'[+] video saved : {join(folder, filename)}')
-                return True
+            with open(file_path, 'wb') as file, tqdm(
+                    desc='Progress',
+                    total=total_size,
+                    unit='MB',
+                    unit_scale=True,
+                    unit_divisor=1024,    
+                ) as progress_bar:
+                    
+                    for chunk in resp.iter_content(chunk_size=1024):
+                        file.write(chunk)
+                        progress_bar.update(len(chunk))
 
-        # concurrency is giving 404 often
+            print(f'[+] video saved to folder')
+            return True
+
+        # asynchronous concurrency is giving 404 often
         # with request("GET", url, headers=general_headers) as res:
         #     res.raise_for_status()
         #     with open(join(folder, filename), 'wb') as file:
@@ -59,5 +72,5 @@ def save_media(url, folder, filename = uuid.uuid4()):
         #         return True
 
     except Exception as e:
-        print(f'Unable to save video : {e} \n {url}')
+        print(f'Unable to save video {url} : {e}')
     

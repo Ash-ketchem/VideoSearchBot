@@ -1,6 +1,7 @@
 import aiohttp
 from dotenv import load_dotenv
 from os import getenv
+from pathlib import Path
 
 class Uploader:
     def __init__(self):

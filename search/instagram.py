@@ -1,4 +1,3 @@
-from utils import instagram_headers
 import requests
 import re
 import json
@@ -6,6 +5,7 @@ from time import sleep
 from os.path import exists, join
 from json import loads, dumps
 from pathlib import Path
+from .utils import instagram_headers
 
 class Instagram:
     def __init__(self, history_file = ''):
@@ -76,8 +76,8 @@ class Instagram:
         
         return video_data
  
-    def get_reels(self, userid, minCount = 10):
-        # implement minimum per account or something similar
+    def get_reels(self, userid, count = 10):
+        # implement minimum per account or something similar as todo
         try:
             print('[*] Searching Reels ...')
             payload={
@@ -100,9 +100,9 @@ class Instagram:
                 res.raise_for_status()
                 
                 data = res.json()
-                video_data.extend(self.process_reels(data))
+                video_data.extend(self.process_reels(data)[:count - len(video_data)])
 
-                if len(video_data) >= minCount:
+                if len(video_data) >= count:
                     break
 
                 max_id = data.get('paging_info', {}).get('max_id', None) # pagination
@@ -112,7 +112,7 @@ class Instagram:
 
                 sleep(10)
 
-            print(f'[+] Fetched {len(video_data)} Reels till now !!!') 
+            print(f'[+] Fetched {len(video_data)} Reels !!!') 
             return video_data
 
         except Exception as e:

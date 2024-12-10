@@ -14,5 +14,5 @@ class Google:
             random.shuffle(res)
             return res
         except Exception as e:
-            print(e)
+            print(f'[-] Search Failed ; {e}')
         
