@@ -40,7 +40,7 @@ This is a bot that downloads videos from Social Media based on user-specified ke
 4. Set up the platform API:
    - Obtain the API credentials.
    - Save the credentials in a configuration file or environment variables.
-   - FLICK_TOKEN = <token>
+   - FLICK_TOKEN = your_token
 
 ## Running the Bot
 
@@ -51,23 +51,19 @@ This is a bot that downloads videos from Social Media based on user-specified ke
    python3 bot.py # for searching videos
    ```
 
-2. The bot will:
+2. **The bot will**:
 
    ### 1. Media Directory Monitoring
 
    - After running `main.py`, the bot will:
-   - Continuously monitor the **media directory** for new files.
+     - Continuously monitor the **media directory** for new files.
+     - Upload files to Empowerverse
 
    ### 2. Instagram Search & Video Download
 
    - After running `bot.py`, the bot will:
-   - Perform a **Google search** for Instagram posts related to a specified keyword.
-   - Download the **videos** found on Instagram posts related to the keyword.
-
-   ### 3. Video Upload
-
-   - Once the videos are downloaded, the bot will:
-   - **Upload** the videos to a specified platform.
+     - Perform a **Google search** for Instagram posts related to a specified keyword.
+     - Download the **videos** found on Instagram posts related to the keyword.
 
 ## TODOs
 
